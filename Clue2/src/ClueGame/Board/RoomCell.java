@@ -1,5 +1,8 @@
 package ClueGame.Board;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class RoomCell extends BoardCell {
 	
 	public RoomCell() {
@@ -36,7 +39,11 @@ public class RoomCell extends BoardCell {
 		return false;
 	}
 	public boolean isRoom(){return true;}
-	//private void draw(){};
+	
+	protected void draw(Graphics g){
+		g.setColor(Color.BLACK);
+		g.fillRect(row*10, col*10, 20, 20);
+	};
 
 	public DoorDirection getDoorDirection() {
 		return doorDirection;

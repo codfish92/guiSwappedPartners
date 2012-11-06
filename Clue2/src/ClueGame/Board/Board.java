@@ -1,5 +1,6 @@
 package ClueGame.Board;
 
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -12,12 +13,14 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JPanel;
+
 import ClueGame.Player.Card;
 import ClueGame.Player.ComputerPlayer;
 import ClueGame.Player.HumanPlayer;
 import ClueGame.Player.Player;
 
-public class Board {
+public class Board extends JPanel{
 
 	private ArrayList<BoardCell> cells = new ArrayList<BoardCell>();
 	private Map<Character, String> rooms = new HashMap<Character, String>();
@@ -370,6 +373,23 @@ public class Board {
 	}
 	
 	public static void serrln(String message) {
+
 		System.err.println(message);
 	}
+	
+	public void paintComponent(Graphics g){
+		for(BoardCell c : cells){
+			c.draw(g);
+		}
+	}
+	public static void main(String[] args){
+		Board game = new Board();
+		game.setVisible(true);
+		
+	}
+	
 }
+
+
+	
+
