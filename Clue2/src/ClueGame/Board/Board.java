@@ -1,5 +1,6 @@
 package ClueGame.Board;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,6 +14,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ClueGame.Player.Card;
@@ -135,22 +137,26 @@ public class Board extends JPanel{
 			Scanner scan = new Scanner(reader);
 			String part = "";
 			while (scan.hasNextLine()) {
+				
 				row++;
+				col = 0;
 				part = scan.nextLine();
 				String[] vars = part.split(",");
 				for (String str : vars) {
-					if (row <= 1)
-						col++;
+					
+					col++;
 					if (str.equals("W")) {
-						WalkwayCell c = new WalkwayCell();
+						WalkwayCell c = new WalkwayCell(row, col);
 						cells.add(c);
 					} else {
-						RoomCell c = new RoomCell(str);
+						RoomCell c = new RoomCell(str, row, col);
 						cells.add(c);
 					}
 				}
-				if (row <= 1)
+				if (row <= 1){
 					setNumColumns(col);
+					
+				}
 			}
 			setNumRows(row);
 			scan.close();
@@ -378,15 +384,17 @@ public class Board extends JPanel{
 	}
 	
 	public void paintComponent(Graphics g){
-		for(BoardCell c : cells){
-			c.draw(g);
+
+		super.paintComponent(g);
+		for(int i = 0; i < cells.size(); ++i){
+			System.out.println(cells.get(i).toString());
+			cells.get(i).draw(g);
+			
 		}
-	}
-	public static void main(String[] args){
-		Board game = new Board();
-		game.setVisible(true);
+		
 		
 	}
+	
 	
 }
 

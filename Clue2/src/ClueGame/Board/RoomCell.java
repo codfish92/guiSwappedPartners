@@ -10,7 +10,7 @@ public class RoomCell extends BoardCell {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RoomCell(String roomString) {
+	public RoomCell(String roomString, int row, int col) {
 		super();
 		if(roomString.length()== 1)
 			this.roomInitial = roomString.charAt(0);
@@ -26,6 +26,8 @@ public class RoomCell extends BoardCell {
 			if(roomString.charAt(1) == 'U')
 				setDoorDirection(doorDirection.UP);
 		}
+		this.col = col;
+		this.row = row;
 	}
 
 	public enum DoorDirection {
@@ -42,7 +44,7 @@ public class RoomCell extends BoardCell {
 	
 	protected void draw(Graphics g){
 		g.setColor(Color.BLACK);
-		g.fillRect(row*10, col*10, 20, 20);
+		g.fillRect((row-1)*20, (col-1)*20, WIDTH, HEIGHT);
 	};
 
 	public DoorDirection getDoorDirection() {

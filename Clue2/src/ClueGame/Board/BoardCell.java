@@ -5,6 +5,8 @@ import java.awt.Graphics;
 public abstract class BoardCell {
 	protected int row;
 	protected int col;
+	protected static final int WIDTH = 20;
+	protected static final int HEIGHT = 20;
 	private char name;
 	public boolean isWalkway(){return false;}
 	public boolean isRoom(){return false;}
