@@ -146,10 +146,10 @@ public class Board extends JPanel{
 					
 					col++;
 					if (str.equals("W")) {
-						WalkwayCell c = new WalkwayCell(row, col);
+						WalkwayCell c = new WalkwayCell(col, row);
 						cells.add(c);
 					} else {
-						RoomCell c = new RoomCell(str, row, col);
+						RoomCell c = new RoomCell(str, col, row);
 						cells.add(c);
 					}
 				}
