@@ -1,7 +1,9 @@
 package ClueGame.Board;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -15,12 +17,44 @@ public class ClueGame extends JFrame{
 		board = new Board();
 		board.loadConfigFiles();
 		add(board, BorderLayout.CENTER);
+		setTitle("Clue");
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		menuBar.add(createFileMenu());
 		setSize(800, 600);
 		detective = new DetectivePanel();
-		detective.setVisible(true);
 		detective.setSize(600, 500);
 	}
 	
+	private JMenu createFileMenu(){
+	  JMenu menu = new JMenu("File"); 
+	  menu.add(createFileExitItem());
+	  menu.add(createDetectiveNotes());
+	  return menu;
+	}
+	
+	private JMenuItem createFileExitItem(){
+		JMenuItem item = new JMenuItem("Exit");
+		class MenuItemListener implements ActionListener{
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		}
+		item.addActionListener(new MenuItemListener());
+		return item;
+	}
+
+	private JMenuItem createDetectiveNotes(){
+		JMenuItem item = new JMenuItem("Detective Notes");
+		class MenuUtemListener implements ActionListener{
+			public void actionPerformed(ActionEvent e){
+				detective.setVisible(true);
+			}
+		}
+		item.addActionListener(new MenuUtemListener());
+		return item;
+	}
+
 	public class DetectivePanel extends JDialog{
 		private CheckPanel check;
 		private BestGuessPanel bestGuess;
@@ -177,5 +211,4 @@ public class ClueGame extends JFrame{
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.setVisible(true);
 	}
-	
 }
