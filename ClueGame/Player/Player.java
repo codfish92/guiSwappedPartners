@@ -16,7 +16,7 @@ public abstract class Player {
 		super();
 		this.name = name;
 		this.plaColor = convertColor(color);
-		this.currentPosition=Integer.parseInt(start);
+		this.currentPosition=Integer.parseInt(start)-1;
 	}
 	public Player() {
 		super();
@@ -68,9 +68,9 @@ public abstract class Player {
 	}
 	
 	public void convertIndex(Board b){
-		int rows = b.getNumRows();
-		currY=currentPosition/rows;
-		currX=currentPosition%rows;
+		int cols = b.getNumColumns();
+		currY=currentPosition/cols;
+		currX=currentPosition%cols;
 	}
 	
 	public void draw(Graphics g, Board b){

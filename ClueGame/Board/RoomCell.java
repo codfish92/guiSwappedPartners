@@ -46,7 +46,7 @@ public class RoomCell extends BoardCell {
 		g.setColor(Color.BLACK);
 		g.fillRect((row-1)*Board.SIZE, (col-1)*Board.SIZE, Board.SIZE, Board.SIZE);
 		if (this.isDoorway()){
-			g.setColor(Color.YELLOW);
+			g.setColor(Color.CYAN);
 			if (doorDirection==DoorDirection.UP){
 				g.fillRect((row-1)*Board.SIZE, (col-1)*Board.SIZE, Board.SIZE, Board.SIZE-(Board.SIZE-Board.SIZE/5));
 			} else if (doorDirection==DoorDirection.DOWN){
