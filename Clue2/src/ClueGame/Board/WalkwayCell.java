@@ -15,6 +15,8 @@ public class WalkwayCell extends BoardCell {
 	public boolean isWalkway(){return true;}
 	protected void draw(Graphics g){
 		g.setColor(Color.MAGENTA);
-		g.fillRect((row-1)*20, (col-1)*20, WIDTH, HEIGHT);
+		g.fillRect((row-1)*Board.SIZE, (col-1)*Board.SIZE, Board.SIZE, Board.SIZE);
+		g.setColor(Color.BLACK);
+		g.drawRect((row-1)*Board.SIZE, (col-1)*Board.SIZE, Board.SIZE, Board.SIZE);
 	};
 }

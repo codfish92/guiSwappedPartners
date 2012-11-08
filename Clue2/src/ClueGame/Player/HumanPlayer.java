@@ -2,8 +2,8 @@ package ClueGame.Player;
 
 public class HumanPlayer extends Player {
 
-	public HumanPlayer(String name) {
-		super(name);
+	public HumanPlayer(String name, String color, String start) {
+		super(name, color, start);
 		// TODO Auto-generated constructor stub
 	}
 	

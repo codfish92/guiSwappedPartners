@@ -44,7 +44,19 @@ public class RoomCell extends BoardCell {
 	
 	protected void draw(Graphics g){
 		g.setColor(Color.BLACK);
-		g.fillRect((row-1)*20, (col-1)*20, WIDTH, HEIGHT);
+		g.fillRect((row-1)*Board.SIZE, (col-1)*Board.SIZE, Board.SIZE, Board.SIZE);
+		if (this.isDoorway()){
+			g.setColor(Color.CYAN);
+			if (doorDirection==DoorDirection.UP){
+				g.fillRect((row-1)*Board.SIZE, (col-1)*Board.SIZE, Board.SIZE, Board.SIZE-(Board.SIZE-Board.SIZE/5));
+			} else if (doorDirection==DoorDirection.DOWN){
+				g.fillRect((row-1)*Board.SIZE, ((col-1)*Board.SIZE)+(Board.SIZE-Board.SIZE/5), Board.SIZE, Board.SIZE-(Board.SIZE-Board.SIZE/5));
+			} else if (doorDirection==DoorDirection.LEFT){
+				g.fillRect((row-1)*Board.SIZE, (col-1)*Board.SIZE, Board.SIZE-(Board.SIZE-Board.SIZE/5), Board.SIZE);
+			} else if (doorDirection==DoorDirection.RIGHT){
+				g.fillRect((row-1)*Board.SIZE+(Board.SIZE-Board.SIZE/5), (col-1)*Board.SIZE, Board.SIZE-(Board.SIZE-Board.SIZE/5), Board.SIZE);
+			}
+		}
 	};
 
 	public DoorDirection getDoorDirection() {

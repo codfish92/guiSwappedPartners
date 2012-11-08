@@ -1,5 +1,5 @@
-Dr. Nefarious
-Jim
-Dora the Explorer
-Inspector Gadget
-Bender Rodriguez
+Dr. Nefarious, gray, 5
+Jim, white, 14
+Dora the Explorer, pink, 85
+Inspector Gadget, blue, 126
+Bender Rodriguez, lightGray, 330

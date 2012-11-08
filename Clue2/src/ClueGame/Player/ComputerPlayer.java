@@ -6,9 +6,8 @@ import java.util.Set;
 import ClueGame.Board.BoardCell;
 
 public class ComputerPlayer extends Player {
-	public ComputerPlayer(String name) {
-		super(name);
-		
+	public ComputerPlayer(String name, String color, String start) {
+		super(name, color, start);
 	}
 	public ComputerPlayer() {
 		super();

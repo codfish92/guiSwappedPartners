@@ -2,6 +2,7 @@ package ClueGame.Board;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class Board extends JPanel{
 	private String answerPerson;
 	private String answerWeapon;
 	private String answerRoom;
+	public static final int SIZE = 30;
 	
 	public void setPlayers(List<Player> playList) {
 		players = playList;
@@ -54,12 +56,14 @@ public class Board extends JPanel{
 		try {
 			FileReader read = new FileReader("people.txt");
 			Scanner scan = new Scanner(read);
-			String person;
-			person = scan.nextLine();
-			players.add(new HumanPlayer(person));
+			String person = scan.nextLine();
+			String[] settings;
+			settings=person.split(", ");
+			players.add(new HumanPlayer(settings[0], settings[1], settings[2]));
 			while(scan.hasNextLine()) {
 				person = scan.nextLine();
-				players.add(new ComputerPlayer(person));
+				settings=person.split(", ");
+				players.add(new ComputerPlayer(settings[0], settings[1], settings[2]));
 			}
 		} catch(FileNotFoundException e){
 			e.getStackTrace();
@@ -137,13 +141,11 @@ public class Board extends JPanel{
 			Scanner scan = new Scanner(reader);
 			String part = "";
 			while (scan.hasNextLine()) {
-				
 				row++;
 				col = 0;
 				part = scan.nextLine();
 				String[] vars = part.split(",");
 				for (String str : vars) {
-					
 					col++;
 					if (str.equals("W")) {
 						WalkwayCell c = new WalkwayCell(col, row);
@@ -384,18 +386,36 @@ public class Board extends JPanel{
 	}
 	
 	public void paintComponent(Graphics g){
-
 		super.paintComponent(g);
 		for(int i = 0; i < cells.size(); ++i){
 			System.out.println(cells.get(i).toString());
 			cells.get(i).draw(g);
-			
 		}
-		
-		
+		List<Player> players = this.getPlayers();
+		for(int i = 0; i<players.size(); ++i){
+			players.get(i).draw(g, this);
+		}
+		drawRoomName(g);
 	}
 	
-	
+	public void drawRoomName(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(Color.GREEN);
+		g2.drawString("Conservatory", 30, 50);
+		g2.drawString("Indoor Pool", 250, 50);
+		g2.drawString("Kitchen", 520, 50);
+		g2.drawString("Study", 80, 240);
+		g2.drawString("Dining Room", 460, 260);
+		g2.drawString("Living Room", 60, 420);
+		g2.drawString("Entryway", 320, 420);
+		g2.drawString("Library", 500, 420);
+		//draw tower
+		g2.drawString("T", 295, 200);
+		g2.drawString("o", 295, 210);
+		g2.drawString("w", 294, 220);
+		g2.drawString("e", 295, 230);
+		g2.drawString("r", 296, 240);
+	}
 }
 
 
