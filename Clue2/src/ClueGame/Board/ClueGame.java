@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -13,13 +14,16 @@ public class ClueGame extends JFrame{
 	private Board board;
 	private DetectivePanel detective;
 	private ControlPanel controls;
+	private PlayerHand hand;
 	public ClueGame () {
 		super();
 		board = new Board();
 		board.loadConfigFiles();
 		controls = new ControlPanel();
+		hand = new PlayerHand();
 		add(board, BorderLayout.CENTER);
 		add(controls, BorderLayout.SOUTH);
+		add(hand, BorderLayout.EAST);
 		setTitle("Clue");
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -75,6 +79,72 @@ public class ClueGame extends JFrame{
 			add(nextPerson);
 			add(makeAccusation);
 			add(die);
+		}
+	}
+	
+	private class PersonCard extends JPanel{
+		private ArrayList<String> person;
+		private JTextArea display;
+		public PersonCard(){
+			setBorder(new TitledBorder (new EtchedBorder(), "People"));
+			display = new JTextArea(2,20);
+			updateDisplay();
+			add(display);
+		}
+		private void updateDisplay(){
+			display.setText("Some Person");
+		}
+		public void setPerson(ArrayList<String> person) {
+			this.person = person;
+		}
+	}
+	
+	private class WeaponCard extends JPanel{
+		private ArrayList<String> weapon;
+		private JTextArea display;
+		public WeaponCard(){
+			setBorder(new TitledBorder (new EtchedBorder(), "Weapons"));
+			display = new JTextArea(2,20);
+			updateDisplay();
+			add(display);
+		}
+		private void updateDisplay(){
+			display.setText("Some Weapon");
+		}
+		public void setWeapon(ArrayList<String> weapon) {
+			this.weapon = weapon;
+		}
+	}
+	
+	private class RoomCard extends JPanel{
+		private ArrayList<String> room;
+		private JTextArea display;
+		public RoomCard(){
+			setBorder(new TitledBorder (new EtchedBorder(), "Rooms"));
+			display = new JTextArea(2,20);
+			updateDisplay();
+			add(display);
+		}
+		private void updateDisplay(){
+			display.setText("Some Room");
+		}
+		public void setRoom(ArrayList<String> room) {
+			this.room = room;
+		}
+	}
+	
+	private class PlayerHand extends JPanel{
+		private RoomCard room;
+		private WeaponCard weapon;
+		private PersonCard person;
+		public PlayerHand(){
+			room = new RoomCard();
+			weapon = new WeaponCard();
+			person = new PersonCard();
+			this.setLayout(new GridLayout(0, 1));
+			add(room);
+			add(weapon);
+			add(person);
 		}
 	}
 	

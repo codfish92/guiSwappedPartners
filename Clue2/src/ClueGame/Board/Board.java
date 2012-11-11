@@ -355,6 +355,7 @@ public class Board extends JPanel{
 		for(int i=0; i < players.size(); i++){
 			players.get(i).giveHand(allHands.get(i));
 		}
+		
 	}
 	
 	public void deal() {
@@ -389,7 +390,6 @@ public class Board extends JPanel{
 	}
 	
 	public static void serrln(String message) {
-
 		System.err.println(message);
 	}
 	
