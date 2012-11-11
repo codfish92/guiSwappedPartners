@@ -11,10 +11,11 @@ import ClueGame.Board.Board;
 import ClueGame.Board.BoardCell;
 
 public abstract class Player {
-	private String name;
+	private String name, color;
 	public Player(String name, String color, String start) {
 		super();
 		this.name = name;
+		this.color = color;
 		this.plaColor = convertColor(color);
 		this.currentPosition=Integer.parseInt(start)-1;
 	}
@@ -28,6 +29,14 @@ public abstract class Player {
 	private Color plaColor;
 	private int currX;
 	private int currY;
+	
+	public String getName(){
+		return name;
+	}
+	
+	public String getColor(){
+		return color;
+	}
 	
 	public Color convertColor(String strColor) {
 		Color color; 

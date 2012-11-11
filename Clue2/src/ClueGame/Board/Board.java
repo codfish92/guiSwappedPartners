@@ -36,10 +36,18 @@ public class Board extends JPanel{
 	private List<Card> deck = new ArrayList<Card>();
 	private List<Player> players = new ArrayList<Player>();
 	private int whoseTurn;
+	private int roll;
 	private String answerPerson;
 	private String answerWeapon;
 	private String answerRoom;
 	public static final int SIZE = 30;
+	
+	public int rollDie(){
+		Random rand = new Random();
+		int rolls = rand.nextInt(5)+1;
+		roll = rolls;
+		return rolls;
+	}
 	
 	public void setPlayers(List<Player> playList) {
 		players = playList;

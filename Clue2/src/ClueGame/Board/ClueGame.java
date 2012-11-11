@@ -2,8 +2,6 @@ package ClueGame.Board;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.*;
 
@@ -14,18 +12,70 @@ import javax.swing.border.TitledBorder;
 public class ClueGame extends JFrame{
 	private Board board;
 	private DetectivePanel detective;
+	private ControlPanel controls;
 	public ClueGame () {
 		super();
 		board = new Board();
 		board.loadConfigFiles();
+		controls = new ControlPanel();
 		add(board, BorderLayout.CENTER);
+		add(controls, BorderLayout.SOUTH);
 		setTitle("Clue");
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
-		setSize(800, 600);
+		setSize(1100, 900);
 		detective = new DetectivePanel();
 		detective.setSize(600, 500);
+	}
+	
+	private class DieRoll extends JPanel{
+		private int roll;
+		private JTextArea display;
+		public DieRoll(){
+			setBorder(new TitledBorder (new EtchedBorder(), "Die Roll"));
+			roll=board.rollDie();
+			display = new JTextArea(2,20);
+			updateDisplay();
+			add(display);
+		}
+		private void updateDisplay(){
+			display.setText(Integer.toString(roll));
+		}
+	}
+	
+	private class WhoseTurn extends JPanel{
+		private String name, color;
+		private JTextArea display;
+		public WhoseTurn(){
+			setBorder(new TitledBorder (new EtchedBorder(), "Current Player"));
+			name=board.getPlayers().get(0).getName();
+			color=board.getPlayers().get(0).getColor();
+			display = new JTextArea(2,20);
+			updateDisplay();
+			add(display);
+		}
+		private void updateDisplay(){
+			display.setText("(" + color + ") " + name);
+		}
+	}
+	
+	private class ControlPanel extends JPanel{
+		private WhoseTurn whoseTurn;
+		private JButton nextPerson;
+		private JButton makeAccusation;
+		private DieRoll die;
+		public ControlPanel(){
+			this.setLayout(new GridLayout(2, 3));
+			whoseTurn = new WhoseTurn();
+			nextPerson = new JButton("Next Player");
+			makeAccusation = new JButton("Make an accusation.");
+			die = new DieRoll();
+			add(whoseTurn);
+			add(nextPerson);
+			add(makeAccusation);
+			add(die);
+		}
 	}
 	
 	private JMenu createFileMenu(){
@@ -213,6 +263,4 @@ public class ClueGame extends JFrame{
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.setVisible(true);
 	}
-	
-	
 }
