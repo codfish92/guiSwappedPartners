@@ -60,6 +60,7 @@ public class Board extends JPanel{
 		loadBoard();
 		loadPlayers();
 		loadDeck();
+		this.deal();
 	}
 	
 	private void loadPlayers() {
@@ -339,7 +340,7 @@ public class Board extends JPanel{
 	}
 	
 	public void deal(List<Card> deck) {
-		boolean shuffle = false;
+		boolean shuffle = true;
 		if (shuffle) {
 			//sets aside accusation
 			int randomNum = Math.abs((new Random()).nextInt() % 20);

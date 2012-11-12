@@ -1,5 +1,6 @@
 package ClueGame.Board;
 
+import ClueGame.Player.Card.Type;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -88,16 +89,22 @@ public class ClueGame extends JFrame{
 		private JButton nextPerson;
 		private JButton makeAccusation;
 		private DieRoll die;
+		private GuessAsked guess;
+		private GuessResult result;
 		public ControlPanel(){
 			this.setLayout(new GridLayout(2, 3));
 			whoseTurn = new WhoseTurn();
 			nextPerson = new JButton("Next Player");
 			makeAccusation = new JButton("Make an accusation.");
 			die = new DieRoll();
+			guess = new GuessAsked();
+			result = new GuessResult();
 			add(whoseTurn);
 			add(nextPerson);
 			add(makeAccusation);
 			add(die);
+			add(guess);
+			add(result);
 			nextPerson.addActionListener(new ButtonListner());
 			makeAccusation.addActionListener(new ButtonListner());
 		}
@@ -131,7 +138,8 @@ public class ClueGame extends JFrame{
 			add(display);
 		}
 		private void updateDisplay(){
-			display.setText("Some Person");
+			System.out.println(board.getPlayers().get(0).getCards().get(0).getName().substring(0, board.getPlayers().get(0).getCards().get(0).getName().indexOf(',')));
+			display.setText(board.getPlayers().get(0).getCards().get(0).getName().substring(0, board.getPlayers().get(0).getCards().get(0).getName().indexOf(',')));
 		}
 		public void setPerson(ArrayList<String> person) {
 			this.person = person;
@@ -365,6 +373,39 @@ public class ClueGame extends JFrame{
 			add(room);
 			add(wpn);
 		}
+	}
+	
+
+	public class GuessResult extends JPanel {
+		private JLabel responseHead, responseField;
+		public GuessResult () {
+			responseHead = new JLabel("Response");
+			responseField = new JLabel("");
+			setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
+			setLayout(new GridLayout(0,2));
+			updateDisplay();
+			add(responseHead);
+			add(responseField);
+		}
+		public void updateDisplay(){
+			responseField.setText("Jim");
+		}
+	}
+	public class GuessAsked extends JPanel {
+		private JLabel guessHead, guessField;
+		public GuessAsked () {
+			guessHead = new JLabel("Guess");
+			setBorder(new TitledBorder(new EtchedBorder(), "Guess"));
+			setLayout(new GridLayout(0,2));
+			updateDisplay();
+			add(guessHead);
+			add(guessField);
+		}
+			public void updateDisplay(){
+				guessField = new JLabel("Jim, M1A1 Abrams, Tower");
+			}
+		
+		
 	}
 	
 	
