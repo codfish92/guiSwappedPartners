@@ -107,6 +107,9 @@ public class ClueGame extends JFrame{
 				if (e.getSource() == nextPerson){
 					whoseTurn.nextTurn();
 					die.updateDisplay();
+					board.whoseTurn=whoseTurn.currentIndex;
+					board.roll = die.roll;
+					board.repaint();
 
 				}
 				else if (e.getSource() == makeAccusation){

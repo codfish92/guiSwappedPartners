@@ -17,6 +17,12 @@ public abstract class BoardCell {
 	public char getChar() {
 		return name;
 	}
+	public int getX() {
+		return row;
+	}
+	public int getY() {
+		return col;
+	}
 	
 	
 }

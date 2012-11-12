@@ -35,8 +35,8 @@ public class Board extends JPanel{
 	private Set<BoardCell> targets = new HashSet<BoardCell>();
 	private List<Card> deck = new ArrayList<Card>();
 	private List<Player> players = new ArrayList<Player>();
-	private int whoseTurn;
-	private int roll;
+	public int whoseTurn;
+	public int roll;
 	private String answerPerson;
 	private String answerWeapon;
 	private String answerRoom;
@@ -426,7 +426,7 @@ public class Board extends JPanel{
 	}
 	
 	public void drawMoves(Graphics g){
-		
+		players.get(whoseTurn).drawTargets(roll, this, g);
 	}
 }
 

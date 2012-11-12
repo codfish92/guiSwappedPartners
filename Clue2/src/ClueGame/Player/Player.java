@@ -87,4 +87,15 @@ public abstract class Player {
 		this.convertIndex(b);
 		g.fillOval(currX*Board.SIZE, currY*Board.SIZE, Board.SIZE, Board.SIZE);
 	}
+	
+	public void drawTargets(int roll, Board brd, Graphics g) {
+		for(BoardCell c : calcTargets(roll, brd)){
+			if(c.isRoom() != true || c.isDoorway() == true){
+				g.setColor(Color.RED);
+				g.fillRect((c.getX()-1)*30, (c.getY()-1)*30, 30, 30);
+			}
+			
+		}
+		this.draw(g, brd); // puts the player oval back on top
+	}
 }
