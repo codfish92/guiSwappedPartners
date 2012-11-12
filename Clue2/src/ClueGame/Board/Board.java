@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -41,6 +42,7 @@ public class Board extends JPanel{
 	private String answerWeapon;
 	private String answerRoom;
 	public static final int SIZE = 30;
+	private boolean[] seen;
 	
 	public int rollDie(){
 		Random rand = new Random();
@@ -230,19 +232,47 @@ public class Board extends JPanel{
 		}
 	}
 
-	public void calcTargets(int startLoc, int steps) {
-		targets.clear();
-		calcTargetsRecursion(startLoc, steps);
+	public void calcTargets(int vertex, int steps) {
+		int start = vertex;
+		targets = new HashSet();
+		seen = new boolean[numRows*numColumns];
+		this.setSeen();
+		seen[start]=true;
+		LinkedList<Integer> path = new LinkedList<Integer>();
+		this.recurseTargets(start, path, steps);
 	}
-
-	private void calcTargetsRecursion(int startLoc, int steps) {
-		if (steps == 0) {
-			targets.add(getCells().get(startLoc));
-			return;
+	
+	private void recurseTargets(int target, LinkedList<Integer> path, int steps){
+		LinkedList<Integer> tempAdj=new LinkedList<Integer>();
+		ListIterator<Integer> itr = this.getAdjList(target).listIterator();
+		while (itr.hasNext()){
+			int next=itr.next();
+			if (seen[next]==false){
+				tempAdj.add(next);
+			} else {
+				continue;
+			}
 		}
-		LinkedList<Integer> start = getAdjList(startLoc);
-		for (int i = 0; i < start.size(); i++) {
-			calcTargetsRecursion(start.get(i), steps - 1);
+		ListIterator<Integer> itrAdj = tempAdj.listIterator();
+		while (itrAdj.hasNext()){
+			int nextNode=itrAdj.next();
+			seen[nextNode]=true;
+			path.push(nextNode);
+			if (path.size() == steps){
+				targets.add(cells.get(nextNode));
+			} else if (cells.get(nextNode).isDoorway()) {
+				targets.add(cells.get(nextNode));
+			} else {
+				recurseTargets(nextNode, path, steps);
+			}
+			path.removeLast();
+			seen[nextNode]=false;
+		}
+	}
+	
+	private void setSeen(){
+		for (int i=0; i<numRows*numColumns; i++){
+			seen[i]=false;
 		}
 	}
 
