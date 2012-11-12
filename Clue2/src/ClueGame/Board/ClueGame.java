@@ -38,12 +38,12 @@ public class ClueGame extends JFrame{
 		private JTextArea display;
 		public DieRoll(){
 			setBorder(new TitledBorder (new EtchedBorder(), "Die Roll"));
-			roll=board.rollDie();
 			display = new JTextArea(2,20);
 			updateDisplay();
 			add(display);
 		}
 		private void updateDisplay(){
+			roll=board.rollDie();
 			display.setText(Integer.toString(roll));
 		}
 	}
@@ -51,6 +51,7 @@ public class ClueGame extends JFrame{
 	private class WhoseTurn extends JPanel{
 		private String name, color;
 		private JTextArea display;
+		private int currentIndex = 0;
 		public WhoseTurn(){
 			setBorder(new TitledBorder (new EtchedBorder(), "Current Player"));
 			name=board.getPlayers().get(0).getName();
@@ -58,9 +59,27 @@ public class ClueGame extends JFrame{
 			display = new JTextArea(2,20);
 			updateDisplay();
 			add(display);
+			
 		}
 		private void updateDisplay(){
 			display.setText("(" + color + ") " + name);
+			display.repaint();
+		}
+		private void nextTurn() {
+			if(currentIndex != 4){
+				currentIndex++;
+				this.name = board.getPlayers().get(currentIndex).getName();
+				this.color = board.getPlayers().get(currentIndex).getColor();
+				updateDisplay();
+				
+
+			}
+			else{
+				currentIndex=0;
+				this.name = board.getPlayers().get(currentIndex).getName();
+				this.color = board.getPlayers().get(currentIndex).getColor();
+				updateDisplay();
+			}
 		}
 	}
 	
@@ -79,6 +98,23 @@ public class ClueGame extends JFrame{
 			add(nextPerson);
 			add(makeAccusation);
 			add(die);
+			nextPerson.addActionListener(new ButtonListner());
+			makeAccusation.addActionListener(new ButtonListner());
+		}
+		
+		public class ButtonListner implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == nextPerson){
+					whoseTurn.nextTurn();
+					die.updateDisplay();
+
+				}
+				else if (e.getSource() == makeAccusation){
+
+				}
+				
+			}
+			
 		}
 	}
 	
@@ -327,6 +363,8 @@ public class ClueGame extends JFrame{
 			add(wpn);
 		}
 	}
+	
+	
 	
 	public static void main(String[] args){
 		ClueGame game = new ClueGame();

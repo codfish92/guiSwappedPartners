@@ -396,7 +396,6 @@ public class Board extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		for(int i = 0; i < cells.size(); ++i){
-			System.out.println(cells.get(i).toString());
 			cells.get(i).draw(g);
 		}
 		List<Player> players = this.getPlayers();
@@ -404,6 +403,7 @@ public class Board extends JPanel{
 			players.get(i).draw(g, this);
 		}
 		drawRoomName(g);
+		drawMoves(g);
 	}
 	
 	public void drawRoomName(Graphics g){
@@ -423,6 +423,10 @@ public class Board extends JPanel{
 		g2.drawString("w", 294, 220);
 		g2.drawString("e", 295, 230);
 		g2.drawString("r", 296, 240);
+	}
+	
+	public void drawMoves(Graphics g){
+		
 	}
 }
 
