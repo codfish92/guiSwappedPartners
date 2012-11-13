@@ -259,12 +259,14 @@ public class Board extends JPanel{
 			int nextNode=itrAdj.next();
 			seen[nextNode]=true;
 			path.push(nextNode);
-			if (path.size() == steps){
-				targets.add(cells.get(nextNode));
-			} else if (cells.get(nextNode).isDoorway()) {
-				targets.add(cells.get(nextNode));
-			} else {
-				recurseTargets(nextNode, path, steps);
+			if(cells.get(nextNode).isRoom() != true || cells.get(nextNode).isDoorway() == true){
+				if (path.size() == steps){
+					targets.add(cells.get(nextNode));
+				} else if (cells.get(nextNode).isDoorway()) {
+					targets.add(cells.get(nextNode));
+				} else {
+					recurseTargets(nextNode, path, steps);
+				}
 			}
 			path.removeLast();
 			seen[nextNode]=false;
@@ -332,6 +334,7 @@ public class Board extends JPanel{
 			adjList.add(cell + numColumns);
 			adjList.add(cell - numColumns);
 		}
+		
 		return adjList;
 	}
 	
