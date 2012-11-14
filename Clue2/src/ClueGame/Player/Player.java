@@ -18,17 +18,20 @@ public abstract class Player {
 		this.color = color;
 		this.plaColor = convertColor(color);
 		this.currentPosition=Integer.parseInt(start)-1;
+		this.hasPlaced = false;
 	}
 	public Player() {
 		super();
+		
 	}
 	
 	protected List<Card> hand;
-	private int currentPosition;
+	public int currentPosition;
 	private Set<BoardCell> targets;
 	private Color plaColor;
-	private int currX;
-	private int currY;
+	public int currX;
+	public int currY;
+	private boolean hasPlaced;
 	
 	public String getName(){
 		return name;
@@ -84,7 +87,10 @@ public abstract class Player {
 	
 	public void draw(Graphics g, Board b){
 		g.setColor(plaColor);
-		this.convertIndex(b);
+		if(this.hasPlaced == false){
+			this.convertIndex(b);
+			this.hasPlaced = true;
+		}
 		g.fillOval(currX*Board.SIZE, currY*Board.SIZE, Board.SIZE, Board.SIZE);
 	}
 	
@@ -97,5 +103,8 @@ public abstract class Player {
 			
 		}
 		this.draw(g, brd); // puts the player oval back on top
+	}
+	public void updateCurrentPosition(Board b){
+		this.currentPosition = (currY*b.getNumColumns() + currX);
 	}
 }

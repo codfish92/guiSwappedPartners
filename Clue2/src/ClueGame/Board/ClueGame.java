@@ -3,6 +3,7 @@ package ClueGame.Board;
 import ClueGame.Player.Card.Type;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class ClueGame extends JFrame{
 	private PlayerHand hand;
 	public ClueGame () {
 		super();
+		
 		board = new Board();
 		board.loadConfigFiles();
 		controls = new ControlPanel();
@@ -32,7 +34,10 @@ public class ClueGame extends JFrame{
 		setSize(1100, 900);
 		detective = new DetectivePanel();
 		detective.setSize(600, 500);
+		board.addMouseListener(new mouseTracker());
+		
 	}
+	
 	
 	private class DieRoll extends JPanel{
 		private int roll;
@@ -112,11 +117,14 @@ public class ClueGame extends JFrame{
 		public class ButtonListner implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == nextPerson){
+					board.getPlayers().get(board.whoseTurn).updateCurrentPosition(board);
 					whoseTurn.nextTurn();
 					die.updateDisplay();
 					board.whoseTurn=whoseTurn.currentIndex;
 					board.roll = die.roll;
+					
 					board.repaint();
+					
 
 				}
 				else if (e.getSource() == makeAccusation){
@@ -405,6 +413,49 @@ public class ClueGame extends JFrame{
 				guessField = new JLabel("Jim, M1A1 Abrams, Tower");
 			}
 		
+		
+	}
+	
+	public class mouseTracker implements MouseListener {
+
+		
+		public void mouseClicked(MouseEvent e) {
+			
+			
+		}
+
+		
+		public void mouseEntered(MouseEvent e) {
+			
+		}
+
+		
+		public void mouseExited(MouseEvent e) {
+			
+		}
+
+		
+		public void mousePressed(MouseEvent e) {
+			
+			
+		}
+
+		
+		public void mouseReleased(MouseEvent e) {
+			int mouseX = e.getX();
+			int mouseY = e.getY();
+			int col = mouseX / board.SIZE + 1;
+			int row = mouseY / board.SIZE + 1;
+			
+			for(BoardCell c : board.getTargets()){
+				if(c.getX() == col && c.getY() == row){
+					board.getPlayers().get(board.whoseTurn).currX = col-1;
+					board.getPlayers().get(board.whoseTurn).currY = row-1;
+					board.paintComponent(board.getGraphics());
+				}
+			}
+			
+		}
 		
 	}
 	

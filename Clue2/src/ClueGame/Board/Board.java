@@ -46,7 +46,7 @@ public class Board extends JPanel{
 	
 	public int rollDie(){
 		Random rand = new Random();
-		int rolls = rand.nextInt(5)+1;
+		int rolls = rand.nextInt(6)+1;
 		roll = rolls;
 		return rolls;
 	}
