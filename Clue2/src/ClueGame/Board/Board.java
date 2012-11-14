@@ -88,7 +88,8 @@ public class Board extends JPanel{
 			Scanner scan = new Scanner(read);
 			int i = 0;
 			while(scan.hasNextLine()) {
-				deck.add(i, new Card(scan.nextLine(), Card.Type.PERSON));
+				String personWithBootStrap = scan.nextLine() ;
+				deck.add(i, new Card(personWithBootStrap.substring(0, personWithBootStrap.indexOf(',')), Card.Type.PERSON));
 				++i;
 			}
 			
