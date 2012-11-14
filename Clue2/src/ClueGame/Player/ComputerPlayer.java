@@ -11,6 +11,7 @@ public class ComputerPlayer extends Player {
 	}
 	public ComputerPlayer() {
 		super();
+		this.setComputer();
 	}
 	
 
@@ -20,6 +21,11 @@ public class ComputerPlayer extends Player {
 		Set<BoardCell> tgts = getTargets();
 		int rnum = Math.abs((new Random()).nextInt() % tgts.size());
 		return (BoardCell) tgts.toArray()[rnum];
+	}
+	
+	public void setComputer(){
+		this.isComputer = true;
+		this.isHuman = false;
 	}
 	
 	public void createSuggestion() {

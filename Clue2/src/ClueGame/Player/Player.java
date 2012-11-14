@@ -12,6 +12,7 @@ import ClueGame.Board.BoardCell;
 
 public abstract class Player {
 	private String name, color;
+	boolean isComputer, isHuman;
 	public Player(String name, String color, String start) {
 		super();
 		this.name = name;
@@ -22,7 +23,8 @@ public abstract class Player {
 	}
 	public Player() {
 		super();
-		
+		isComputer=false;
+		isHuman=false;
 	}
 	
 	protected List<Card> hand;
@@ -32,6 +34,18 @@ public abstract class Player {
 	public int currX;
 	public int currY;
 	private boolean hasPlaced;
+	
+	public void setCurrX(int col){
+		this.currX=col;
+	}
+	
+	public void setCurrY(int row){
+		this.currY=row;
+	}
+	
+	public boolean getComputer(){
+		return isComputer;
+	}
 	
 	public String getName(){
 		return name;

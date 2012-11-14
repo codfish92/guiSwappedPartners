@@ -191,6 +191,12 @@ public class Board extends JPanel{
 		return roomCell;
 	}
 
+	public BoardCell getCellAt(int row, int col) {
+		BoardCell boardCell;
+		boardCell = getCells().get(calcIndex(row, col));
+		return boardCell;
+	}
+	
 	public ArrayList<BoardCell> getCells() {
 		return cells;
 	}

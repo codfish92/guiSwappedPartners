@@ -4,7 +4,13 @@ public class HumanPlayer extends Player {
 
 	public HumanPlayer(String name, String color, String start) {
 		super(name, color, start);
+		this.setHuman();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void setHuman(){
+		this.isHuman=true;
+		this.isComputer=false;
 	}
 	
 	@Override
