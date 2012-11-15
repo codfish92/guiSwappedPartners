@@ -411,32 +411,28 @@ public class ClueGameGui extends JFrame{
 
 
 	public class GuessResult extends JPanel {
-		private JLabel responseHead, responseField;
+		private JLabel responseField;
 		public GuessResult () {
-			responseHead = new JLabel("Response");
 			responseField = new JLabel("");
-			setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
+			setBorder(new TitledBorder(new EtchedBorder(), "Respone"));
 			setLayout(new GridLayout(0,2));
 			updateDisplay();
-			add(responseHead);
 			add(responseField);
 		}
 		public void updateDisplay(){
-			responseField.setText("Jim");
+			responseField.setText("");
 		}
 	}
 	public class GuessAsked extends JPanel {
-		private JLabel guessHead, guessField;
+		private JLabel guessField;
 		public GuessAsked () {
-			guessHead = new JLabel("Guess");
 			setBorder(new TitledBorder(new EtchedBorder(), "Guess"));
 			setLayout(new GridLayout(0,2));
 			updateDisplay();
-			add(guessHead);
 			add(guessField);
 		}
 		public void updateDisplay(){
-			guessField = new JLabel("Jim, M1A1 Abrams, Tower");
+			guessField = new JLabel("");
 		}
 
 
