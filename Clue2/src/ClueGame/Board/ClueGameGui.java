@@ -22,7 +22,7 @@ public class ClueGameGui extends JFrame{
 	private PlayerHand hand;
 	public ClueGameGui () {
 		super();
-		
+
 		board = new Board();
 		board.loadConfigFiles();
 		controls = new ControlPanel();
@@ -40,8 +40,8 @@ public class ClueGameGui extends JFrame{
 		board.addMouseListener(new mouseTracker());
 		this.splashScreen();
 	}
-	
-	
+
+
 	private class DieRoll extends JPanel{
 		private int roll;
 		private JTextArea display;
@@ -56,7 +56,7 @@ public class ClueGameGui extends JFrame{
 			display.setText(Integer.toString(roll));
 		}
 	}
-	
+
 	private class WhoseTurn extends JPanel{
 		private String name, color;
 		private JTextArea display;
@@ -68,7 +68,7 @@ public class ClueGameGui extends JFrame{
 			display = new JTextArea(2,20);
 			updateDisplay();
 			add(display);
-			
+
 		}
 		private void updateDisplay(){
 			display.setText("(" + color + ") " + name);
@@ -89,7 +89,7 @@ public class ClueGameGui extends JFrame{
 			}
 		}
 	}
-	
+
 	private class ControlPanel extends JPanel{
 		private WhoseTurn whoseTurn;
 		private JButton nextPerson;
@@ -114,7 +114,7 @@ public class ClueGameGui extends JFrame{
 			nextPerson.addActionListener(new ButtonListner());
 			makeAccusation.addActionListener(new ButtonListner());
 		}
-		
+
 		public class ButtonListner implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				Player currentPlayer = board.getPlayers().get(board.whoseTurn);
@@ -137,17 +137,17 @@ public class ClueGameGui extends JFrame{
 				else if (e.getSource() == makeAccusation){
 
 				}
-				
+
 			}
-			
+
 		}
 	}
-	
+
 	public void splashScreen(){
 		String message = "You are playing as " + this.board.getPlayers().get(0).getName() + " make your move.";
 		JOptionPane.showMessageDialog(null, message);
 	}
-	
+
 	private class PersonCard extends JPanel{
 		private ArrayList<String> person;
 		private JTextArea display;
@@ -160,16 +160,16 @@ public class ClueGameGui extends JFrame{
 		private void updateDisplay(){
 			display.setText("");
 			for(int i = 0; i< board.getPlayers().get(0).getCards().size(); ++i){
-					if(board.getPlayers().get(0).getCards().get(i).getType() == ClueGame.Player.Card.Type.PERSON){
-						display.setText(display.getText() + " : " + board.getPlayers().get(0).getCards().get(i).getName());
-					}
+				if(board.getPlayers().get(0).getCards().get(i).getType() == ClueGame.Player.Card.Type.PERSON){
+					display.setText(display.getText() + " : " + board.getPlayers().get(0).getCards().get(i).getName());
+				}
 			}
 		}
 		public void setPerson(ArrayList<String> person) {
 			this.person = person;
 		}
 	}
-	
+
 	private class WeaponCard extends JPanel{
 		private ArrayList<String> weapon;
 		private JTextArea display;
@@ -182,16 +182,16 @@ public class ClueGameGui extends JFrame{
 		private void updateDisplay(){
 			display.setText("");
 			for(int i = 0; i< board.getPlayers().get(0).getCards().size(); ++i){
-					if(board.getPlayers().get(0).getCards().get(i).getType() == ClueGame.Player.Card.Type.WEAPON){
-						display.setText(display.getText() + " : " + board.getPlayers().get(0).getCards().get(i).getName());
-					}
+				if(board.getPlayers().get(0).getCards().get(i).getType() == ClueGame.Player.Card.Type.WEAPON){
+					display.setText(display.getText() + " : " + board.getPlayers().get(0).getCards().get(i).getName());
+				}
 			}
 		}
 		public void setWeapon(ArrayList<String> weapon) {
 			this.weapon = weapon;
 		}
 	}
-	
+
 	private class RoomCard extends JPanel{
 		private ArrayList<String> room;
 		private JTextArea display;
@@ -204,16 +204,16 @@ public class ClueGameGui extends JFrame{
 		private void updateDisplay(){
 			display.setText("");
 			for(int i = 0; i< board.getPlayers().get(0).getCards().size(); ++i){
-					if(board.getPlayers().get(0).getCards().get(i).getType() == ClueGame.Player.Card.Type.ROOM){
-						display.setText(display.getText() + " : " + board.getPlayers().get(0).getCards().get(i).getName());
-					}
+				if(board.getPlayers().get(0).getCards().get(i).getType() == ClueGame.Player.Card.Type.ROOM){
+					display.setText(display.getText() + " : " + board.getPlayers().get(0).getCards().get(i).getName());
+				}
 			}
 		}
 		public void setRoom(ArrayList<String> room) {
 			this.room = room;
 		}
 	}
-	
+
 	private class PlayerHand extends JPanel{
 		private RoomCard room;
 		private WeaponCard weapon;
@@ -228,14 +228,14 @@ public class ClueGameGui extends JFrame{
 			add(person);
 		}
 	}
-	
+
 	private JMenu createFileMenu(){
-	  JMenu menu = new JMenu("File"); 
-	  menu.add(createFileExitItem());
-	  menu.add(createDetectiveNotes());
-	  return menu;
+		JMenu menu = new JMenu("File"); 
+		menu.add(createFileExitItem());
+		menu.add(createDetectiveNotes());
+		return menu;
 	}
-	
+
 	private JMenuItem createFileExitItem(){
 		JMenuItem item = new JMenuItem("Exit");
 		class MenuItemListener implements ActionListener{
@@ -269,7 +269,7 @@ public class ClueGameGui extends JFrame{
 			add(bestGuess);
 		}
 	}
-	
+
 	public class CheckPanel extends JPanel {
 		private PeopleBox people;
 		private RoomBox room;
@@ -290,7 +290,7 @@ public class ClueGameGui extends JFrame{
 				add(jimBox);
 				add(benderBox);
 			}
-		
+
 		}
 		public class RoomBox extends JPanel {
 			private JCheckBox conservatory, indoorPool, kitchen, study, diningRoom, livingRoom, entryway, library, tower;
@@ -315,7 +315,7 @@ public class ClueGameGui extends JFrame{
 				add(entryway);
 				add(library);
 				add(tower);
-				
+
 			}
 		}
 		public class WeaponBox extends JPanel {
@@ -408,7 +408,7 @@ public class ClueGameGui extends JFrame{
 			add(wpn);
 		}
 	}
-	
+
 
 	public class GuessResult extends JPanel {
 		private JLabel responseHead, responseField;
@@ -435,55 +435,61 @@ public class ClueGameGui extends JFrame{
 			add(guessHead);
 			add(guessField);
 		}
-			public void updateDisplay(){
-				guessField = new JLabel("Jim, M1A1 Abrams, Tower");
-			}
-		
-		
+		public void updateDisplay(){
+			guessField = new JLabel("Jim, M1A1 Abrams, Tower");
+		}
+
+
 	}
-	
+
 	public class mouseTracker implements MouseListener {
 
-		
+
 		public void mouseClicked(MouseEvent e) {
-			
-			
+
+
 		}
 
-		
+
 		public void mouseEntered(MouseEvent e) {
-			
+
 		}
 
-		
+
 		public void mouseExited(MouseEvent e) {
-			
+
 		}
 
-		
+
 		public void mousePressed(MouseEvent e) {
-			
-			
+
+
 		}
 
-		
+
 		public void mouseReleased(MouseEvent e) {
 			int mouseX = e.getX();
 			int mouseY = e.getY();
 			int col = mouseX / board.SIZE + 1;
 			int row = mouseY / board.SIZE + 1;
+			boolean valid = false;
 			for(BoardCell c : board.getTargets()){
 				if(c.getX() == col && c.getY() == row){
+					valid=true;
 					board.getPlayers().get(board.whoseTurn).currX = col-1;
 					board.getPlayers().get(board.whoseTurn).currY = row-1;
 					board.paintComponent(board.getGraphics());
-				}
-			}
+				} 
+			} 
+			if(!valid){
+				String message = "That is not a valid selection choose again.";
+				JOptionPane.showMessageDialog(null, message);
+			} 
 		}
 	}
-	
-	
-	
+
+
+
 	public static void main(String[] args){
 		ClueGameGui game = new ClueGameGui();
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
