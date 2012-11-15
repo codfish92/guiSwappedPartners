@@ -23,7 +23,7 @@ public class ClueGameGui extends JFrame{
 	private PlayerHand hand;
 	private boolean hasMadeTurn;
 	private HumanSeg humSeg;
-	private CompSeg compSeg;
+	private Acu acu;
 	public ClueGameGui () {
 		super();
 		hasMadeTurn=false;
@@ -43,6 +43,8 @@ public class ClueGameGui extends JFrame{
 		detective.setSize(600, 500);
 		humSeg = new HumanSeg();
 		humSeg.setSize(400, 400);
+		acu = new Acu();
+		acu.setSize(400, 400);
 		board.addMouseListener(new mouseTracker());
 		this.splashScreen();
 	}
@@ -101,9 +103,72 @@ public class ClueGameGui extends JFrame{
 			
 		}
 	}
+	private class Acu extends JDialog {
+		private HumanAcuPanels field;
+		private JButton button;
+		public Acu() {
+			field = new HumanAcuPanels();
+			button = new JButton("Make Accusation");
+			add(field, BorderLayout.CENTER);
+			add(button, BorderLayout.SOUTH);
+			button.addActionListener(new ButtonListener());
+		}
+		public class ButtonListener implements ActionListener {
+
 	
-	private class CompSeg extends JDialog {
-		
+			public void actionPerformed(ActionEvent e) {
+				if(board.checkAccusation((String)field.personSelect.getSelectedItem(), (String)field.weaponSelect.getSelectedItem(), (String)field.roomSelect.getSelectedItem()) == true){
+					JOptionPane.showMessageDialog(null, "You Won");
+					System.exit(0);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "You da herped when ya shouldve derped");
+				}
+				
+			}
+			
+		}
+	}
+	private class HumanAcuPanels extends JPanel {
+		private JLabel  roomBorder, personBorder, weaponBorder;
+		private JComboBox personSelect, weaponSelect, roomSelect; 
+		public HumanAcuPanels() {
+			
+			roomBorder = new JLabel("Room");
+			personBorder = new JLabel("Person");
+			weaponBorder = new JLabel("Weapon");
+			personSelect = new JComboBox();
+			for(int i = 0; i< board.getPlayers().size(); ++i) {
+				personSelect.addItem(board.getPlayers().get(i).getName());
+			}
+			
+			weaponSelect = new JComboBox();
+			weaponSelect.addItem("Sharpened footballs");
+			weaponSelect.addItem("M1A1 Abrahms Tank");
+			weaponSelect.addItem("awkward turtle");
+			weaponSelect.addItem("The Magic Schoolbus");
+			weaponSelect.addItem("cotton balls");
+			weaponSelect.addItem("Flying Spaghetti Monster");
+			roomSelect = new JComboBox();
+			roomSelect.addItem("Conservatory");
+			roomSelect.addItem("Indoor Pool");
+			roomSelect.addItem("Kitchen");
+			roomSelect.addItem("Study");
+			roomSelect.addItem("Dining Room");
+			roomSelect.addItem("Living Room");
+			roomSelect.addItem("Entryway");
+			roomSelect.addItem("Library");
+			roomSelect.addItem("Tower");
+			
+			setLayout(new GridLayout(0,1));
+			add(personBorder);
+			add(personSelect);
+			add(weaponBorder);
+			add(weaponSelect);
+			add(roomBorder);
+			add(roomSelect);
+			
+		}
 	}
 	
 	
@@ -245,10 +310,10 @@ public class ClueGameGui extends JFrame{
 							toggleHumanSeg(x);
 						}
 						else if(board.getCellAt(currentPlayer.currY, currentPlayer.currX).isDoorway() && currentPlayer.getComputer() == true){
-							int person = new Random().nextInt(5);
-							int askee = new Random().nextInt(5);
-							int weapon = new Random().nextInt(6);
-							int room = new Random().nextInt(9);
+							int person = Math.abs(new Random().nextInt(5));
+							int askee = Math.abs(new Random().nextInt(5));
+							int weapon = Math.abs(new Random().nextInt(6));
+							int room = Math.abs(new Random().nextInt(9));
 							String wep = null;
 							String rm = null;
 							if (weapon ==0)
@@ -263,6 +328,8 @@ public class ClueGameGui extends JFrame{
 								wep = "cotton balls";
 							else if (weapon ==5)
 								wep = "Flying Spaghetti Monster";
+							else 
+								wep = "";
 							
 							if (room == 0)
 								rm = "Conservatory";
@@ -282,9 +349,17 @@ public class ClueGameGui extends JFrame{
 								rm = "Library";
 							else if(room == 8)
 								rm = "Tower";
-							if(board.getPlayers().get(askee).disproveSuggestion(board.getPlayers().get(person).getName(), wep, rm).getName() == null)
+							else 
+								rm = "";
+							System.out.println(board.getPlayers().get(person).getName());
+							System.out.println(wep);
+							System.out.println(rm);
+							System.out.println(askee);
+							System.out.println(board.getPlayers().get(askee).getName());
+							if(board.getPlayers().get(askee).disproveSuggestion(board.getPlayers().get(person).getName(), wep, rm).getName() != null)
+								JOptionPane.showMessageDialog(null, "The Shown card is "+ board.getPlayers().get(askee).disproveSuggestion(board.getPlayers().get(person).getName(), wep, rm).getName());
+							else 
 								JOptionPane.showMessageDialog(null, "herpDerp");
-							JOptionPane.showMessageDialog(null, "The Shown card is " + board.getPlayers().get(askee).disproveSuggestion(board.getPlayers().get(person).getName(), wep, rm).getName());
 						}
 						hasMadeTurn=false;
 					} else {
@@ -293,10 +368,11 @@ public class ClueGameGui extends JFrame{
 					}
 				}
 				else if (e.getSource() == makeAccusation){
-
+						acu.setVisible(true);
 				}
 
 			}
+			
 
 		}
 		public String determineRoom(int roomNum){

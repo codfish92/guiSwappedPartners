@@ -14,7 +14,7 @@ public class HumanPlayer extends Player {
 	
 	@Override
 	public Card disproveSuggestion(String person, String weapon, String room) {
-		for (Card c : getCards()) {
+		for (Card c : this.hand) {
 			if (c.getName().equals(person)|| c.getName().equals(weapon) || c.getName().equals(room)){
 				return c;
 			}

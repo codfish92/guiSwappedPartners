@@ -360,6 +360,7 @@ public class Board extends JPanel{
 				randomNum = Math.abs((new Random()).nextInt() % 20);
 			}
 			answerPerson = deck.get(randomNum).getName();
+		
 			deck.remove(randomNum);
 			//pick random weapon card
 			randomNum = Math.abs((new Random()).nextInt() % 19);
@@ -367,6 +368,7 @@ public class Board extends JPanel{
 				randomNum = Math.abs((new Random()).nextInt() % 19);
 			}
 			answerWeapon = deck.get(randomNum).getName();
+		
 			deck.remove(randomNum);
 			//pick random room card
 			randomNum = Math.abs((new Random()).nextInt() % 18);
