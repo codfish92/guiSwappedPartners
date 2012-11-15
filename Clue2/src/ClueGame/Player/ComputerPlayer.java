@@ -52,7 +52,7 @@ public class ComputerPlayer extends Player {
 	
 	@Override
 	public Card disproveSuggestion(String person, String weapon, String room) {
-		System.err.println("Hand: " + this.hand);
+
 		for (Card c : this.hand) {
 			if (c.getName().equals(person)|| c.getName().equals(weapon) || c.getName().equals(room)){
 				return c;

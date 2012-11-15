@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -242,8 +243,48 @@ public class ClueGameGui extends JFrame{
 							int y = board.getRoomCellAt(currentPlayer.currY, currentPlayer.currX).getRoomInitial();
 							String x = determineRoom(y);
 							toggleHumanSeg(x);
-
+						}
+						else if(board.getCellAt(currentPlayer.currY, currentPlayer.currX).isDoorway() && currentPlayer.getComputer() == true){
+							int person = new Random().nextInt(5);
+							int askee = new Random().nextInt(5);
+							int weapon = new Random().nextInt(6);
+							int room = new Random().nextInt(9);
+							String wep = null;
+							String rm = null;
+							if (weapon ==0)
+								wep = "Sharpened footballs";
+							else if (weapon ==1)
+								wep = "M1A1 Abrahms Tank";
+							else if (weapon ==2)
+								wep = "awkward turtle";
+							else if (weapon ==3)
+								wep = "The Magic Schoolbus";
+							else if (weapon ==4)
+								wep = "cotton balls";
+							else if (weapon ==5)
+								wep = "Flying Spaghetti Monster";
 							
+							if (room == 0)
+								rm = "Conservatory";
+							else if(room == 1)
+								rm = "Indoor Pool";
+							else if(room == 2)
+								rm = "Kitchen";
+							else if(room == 3)
+								rm = "Study";
+							else if(room == 4)
+								rm = "Dining Room";
+							else if(room == 5)
+								rm = "Living Room";
+							else if(room == 6)
+								rm = "Entryway";
+							else if(room == 7)
+								rm = "Library";
+							else if(room == 8)
+								rm = "Tower";
+							if(board.getPlayers().get(askee).disproveSuggestion(board.getPlayers().get(person).getName(), wep, rm).getName() == null)
+								JOptionPane.showMessageDialog(null, "herpDerp");
+							JOptionPane.showMessageDialog(null, "The Shown card is " + board.getPlayers().get(askee).disproveSuggestion(board.getPlayers().get(person).getName(), wep, rm).getName());
 						}
 						hasMadeTurn=false;
 					} else {
