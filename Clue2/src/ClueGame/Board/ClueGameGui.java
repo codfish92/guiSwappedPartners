@@ -21,6 +21,8 @@ public class ClueGameGui extends JFrame{
 	private ControlPanel controls;
 	private PlayerHand hand;
 	private boolean hasMadeTurn;
+	private HumanSeg humSeg;
+	private CompSeg compSeg;
 	public ClueGameGui () {
 		super();
 		hasMadeTurn=false;
@@ -38,10 +40,114 @@ public class ClueGameGui extends JFrame{
 		setSize(1100, 900);
 		detective = new DetectivePanel();
 		detective.setSize(600, 500);
+		humSeg = new HumanSeg();
+		humSeg.setSize(400, 400);
 		board.addMouseListener(new mouseTracker());
 		this.splashScreen();
 	}
 
+	public void toggleHumanSeg(String room) {
+		if(this.humSeg.isVisible() == true) 
+			humSeg.setVisible(false);
+		
+		else{
+			humSeg.setVisible(true);
+			this.humSeg.setRoom(room);
+		}
+	}
+	
+	public String getPersonFromGuess(){
+		return (String) this.humSeg.panel.personSelect.getSelectedItem();
+	}
+	public String getWeaponFromGuess(){
+		return (String) this.humSeg.panel.weaponSelect.getSelectedItem();
+	}
+	public String getRoomFromGuess(){
+		return this.humSeg.panel.room.getText();
+	}
+	public int getAskee(){
+		System.out.println(this.humSeg.panel.askSelect.getSelectedIndex());
+		return this.humSeg.panel.askSelect.getSelectedIndex() + 1;
+	}
+	
+	private class HumanSeg extends JDialog {
+		private HumanSegPanels panel;
+		private JButton button;
+		public HumanSeg(){
+			panel = new HumanSegPanels();
+			button = new JButton("make Suggestion");
+			this.setSize(400, 400);
+			add(panel, BorderLayout.CENTER);
+			add(button, BorderLayout.SOUTH);
+			button.addActionListener(new ButtonListener());
+			
+		}
+		public void setRoom(String room) { // only to lower the amount of method calls required
+			panel.setRoom(room);
+		}
+		
+		
+		public class ButtonListener implements ActionListener {
+
+			public void actionPerformed(ActionEvent e) {
+				if(board.getPlayers().get(getAskee()).disproveSuggestion(getPersonFromGuess(), getWeaponFromGuess(), getRoomFromGuess()) != null)
+					JOptionPane.showMessageDialog(null, board.getPlayers().get(getAskee()).disproveSuggestion(getPersonFromGuess(), getWeaponFromGuess(), getRoomFromGuess()).getName());
+				else
+					JOptionPane.showMessageDialog(null, "That person had none of those cards");
+				humSeg.setVisible(false);
+				
+			}
+			
+		}
+	}
+	
+	private class CompSeg extends JDialog {
+		
+	}
+	
+	
+	
+	private class HumanSegPanels extends JPanel {
+		private JLabel room, roomBorder, personBorder, weaponBorder, askBorder;
+		private JComboBox personSelect, weaponSelect, askSelect; 
+		public HumanSegPanels() {
+			room = new JLabel("");
+			roomBorder = new JLabel("Room");
+			personBorder = new JLabel("Person");
+			weaponBorder = new JLabel("Weapon");
+			askBorder = new JLabel("The person you are suggesting");
+			personSelect = new JComboBox();
+			for(int i = 0; i< board.getPlayers().size(); ++i) {
+				personSelect.addItem(board.getPlayers().get(i).getName());
+			}
+			askSelect = new JComboBox();
+			for(int i = 1; i <board.getPlayers().size(); ++i) {
+				
+				askSelect.addItem(board.getPlayers().get(i).getName());
+			}
+			weaponSelect = new JComboBox();
+			weaponSelect.addItem("Sharpened footballs");
+			weaponSelect.addItem("M1A1 Abrahms Tank");
+			weaponSelect.addItem("awkward turtle");
+			weaponSelect.addItem("The Magic Schoolbus");
+			weaponSelect.addItem("cotton balls");
+			weaponSelect.addItem("Flying Spaghetti Monster");
+			setLayout(new GridLayout(0,1));
+			add(personBorder);
+			add(personSelect);
+			add(weaponBorder);
+			add(weaponSelect);
+			add(roomBorder);
+			add(room);
+			add(askBorder);
+			add(askSelect);
+			
+		}
+		public void setRoom(String room){
+			this.room.setText(room);
+		}
+		
+	}
 
 	private class DieRoll extends JPanel{
 		private int roll;
@@ -132,6 +238,13 @@ public class ClueGameGui extends JFrame{
 						board.whoseTurn=whoseTurn.currentIndex;
 						board.roll = die.roll;
 						board.repaint();
+						if(board.getCellAt(currentPlayer.currY, currentPlayer.currX).isDoorway() && currentPlayer.getComputer() == false){
+							int y = board.getRoomCellAt(currentPlayer.currY, currentPlayer.currX).getRoomInitial();
+							String x = determineRoom(y);
+							toggleHumanSeg(x);
+
+							
+						}
 						hasMadeTurn=false;
 					} else {
 						String message = "You need to finish your turn.";
@@ -145,6 +258,29 @@ public class ClueGameGui extends JFrame{
 			}
 
 		}
+		public String determineRoom(int roomNum){
+			//uses weird numbers due to the fact that getRoomInitial returns a char that is 1-9, sigh
+				if (roomNum == 49)
+					return "Conservatory";
+				else if (roomNum == 50)
+					return "Indoor Pool";
+				else if (roomNum == 51)
+					return "Kitchen";
+				else if (roomNum == 52)
+					return "Study";
+				else if (roomNum == 53)
+					return "Dining Room";
+				else if (roomNum == 54)
+					return "Living Room";
+				else if (roomNum == 55)
+					return "Living Room";
+				else if (roomNum == 56)
+					return "Library";
+				else if (roomNum == 57)
+					return "Tower";
+				else
+					return "";
+			}
 	}
 
 	public void splashScreen(){
