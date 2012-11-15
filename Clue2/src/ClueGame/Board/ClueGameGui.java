@@ -120,6 +120,11 @@ public class ClueGameGui extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Player currentPlayer = board.getPlayers().get(board.whoseTurn);
 				if (e.getSource() == nextPerson){
+					if (currentPlayer.getComputer()){
+						hasMadeTurn=true;
+						ComputerPlayer temp = (ComputerPlayer) currentPlayer;
+						temp.takeTurn(board);
+					}
 					if (hasMadeTurn){
 						currentPlayer.updateCurrentPosition(board);
 						whoseTurn.nextTurn();
@@ -128,10 +133,6 @@ public class ClueGameGui extends JFrame{
 						board.roll = die.roll;
 						board.repaint();
 						hasMadeTurn=false;
-						if (currentPlayer.getComputer()){
-							ComputerPlayer temp = (ComputerPlayer) currentPlayer;
-							temp.takeTurn(board);
-						}
 					} else {
 						String message = "You need to finish your turn.";
 						JOptionPane.showMessageDialog(null, message);

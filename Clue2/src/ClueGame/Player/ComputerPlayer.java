@@ -9,10 +9,11 @@ import ClueGame.Board.BoardCell;
 public class ComputerPlayer extends Player {
 	public ComputerPlayer(String name, String color, String start) {
 		super(name, color, start);
+		this.isComputer=true;
 	}
 	public ComputerPlayer() {
 		super();
-		this.setComputer();
+		this.isComputer=true;
 	}
 
 	private char lastRoomVisited;
@@ -31,9 +32,10 @@ public class ComputerPlayer extends Player {
 		BoardCell newCell = pickMove(b);
 		int col = newCell.getX();
 		int row = newCell.getY();
-		this.setCurrX(col);
-		this.setCurrY(row);
+		this.setCurrX(col-1);
+		this.setCurrY(row-1);
 		b.repaint();
+		this.updateCurrentPosition(b);
 	}
 	
 	public void createSuggestion() {
