@@ -3,6 +3,7 @@ package ClueGame.Player;
 import java.util.Random;
 import java.util.Set;
 
+import ClueGame.Board.Board;
 import ClueGame.Board.BoardCell;
 
 public class ComputerPlayer extends Player {
@@ -13,19 +14,26 @@ public class ComputerPlayer extends Player {
 		super();
 		this.setComputer();
 	}
-	
 
 	private char lastRoomVisited;
 	
-	public BoardCell pickMove(int roll) {
-		Set<BoardCell> tgts = getTargets();
+	public BoardCell pickMove(Board b) {
+		Set<BoardCell> tgts = b.getTargets();
 		int rnum = Math.abs((new Random()).nextInt() % tgts.size());
 		return (BoardCell) tgts.toArray()[rnum];
 	}
 	
 	public void setComputer(){
 		this.isComputer = true;
-		this.isHuman = false;
+	}
+	
+	public void takeTurn(Board b){
+		BoardCell newCell = pickMove(b);
+		int col = newCell.getX();
+		int row = newCell.getY();
+		this.setCurrX(col);
+		this.setCurrY(row);
+		b.repaint();
 	}
 	
 	public void createSuggestion() {

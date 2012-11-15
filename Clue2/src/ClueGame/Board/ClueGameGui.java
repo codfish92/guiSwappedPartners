@@ -20,9 +20,10 @@ public class ClueGameGui extends JFrame{
 	private DetectivePanel detective;
 	private ControlPanel controls;
 	private PlayerHand hand;
+	private boolean hasMadeTurn;
 	public ClueGameGui () {
 		super();
-
+		hasMadeTurn=false;
 		board = new Board();
 		board.loadConfigFiles();
 		controls = new ControlPanel();
@@ -119,19 +120,21 @@ public class ClueGameGui extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Player currentPlayer = board.getPlayers().get(board.whoseTurn);
 				if (e.getSource() == nextPerson){
-					currentPlayer.updateCurrentPosition(board);
-					whoseTurn.nextTurn();
-					die.updateDisplay();
-					board.whoseTurn=whoseTurn.currentIndex;
-					board.roll = die.roll;
-					board.repaint();
-					if (currentPlayer.getComputer()){
-						ComputerPlayer tempPlayer = (ComputerPlayer) currentPlayer;
-						BoardCell pickedCell = tempPlayer.pickMove(board.roll);
-						board.getPlayers().get(board.whoseTurn).currX = pickedCell.getX();
-						board.getPlayers().get(board.whoseTurn).currY = pickedCell.getY();
-						board.getPlayers().get(board.whoseTurn).updateCurrentPosition(board);
-						board.paintComponent(board.getGraphics());
+					if (hasMadeTurn){
+						currentPlayer.updateCurrentPosition(board);
+						whoseTurn.nextTurn();
+						die.updateDisplay();
+						board.whoseTurn=whoseTurn.currentIndex;
+						board.roll = die.roll;
+						board.repaint();
+						hasMadeTurn=false;
+						if (currentPlayer.getComputer()){
+							ComputerPlayer temp = (ComputerPlayer) currentPlayer;
+							temp.takeTurn(board);
+						}
+					} else {
+						String message = "You need to finish your turn.";
+						JOptionPane.showMessageDialog(null, message);
 					}
 				}
 				else if (e.getSource() == makeAccusation){
@@ -472,6 +475,7 @@ public class ClueGameGui extends JFrame{
 			for(BoardCell c : board.getTargets()){
 				if(c.getX() == col && c.getY() == row){
 					valid=true;
+					hasMadeTurn=true;
 					board.getPlayers().get(board.whoseTurn).currX = col-1;
 					board.getPlayers().get(board.whoseTurn).currY = row-1;
 					board.paintComponent(board.getGraphics());

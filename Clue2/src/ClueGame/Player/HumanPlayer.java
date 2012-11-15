@@ -9,7 +9,6 @@ public class HumanPlayer extends Player {
 	}
 	
 	public void setHuman(){
-		this.isHuman=true;
 		this.isComputer=false;
 	}
 	
